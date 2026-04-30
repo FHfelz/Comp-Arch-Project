@@ -1,48 +1,28 @@
-//////////////////////////////////////////////////////////////////////////////////
-// The Cooper Union
-// ECE 251 Spring 2023
-// Engineer: Prof Rob Marano
-// 
-//     Create Date: 2023-02-07
-//     Module Name: clock
-//     Description: Clock generator; duty cycle = 50%
-//
-// Revision: 1.0
-//
-//////////////////////////////////////////////////////////////////////////////////
+
+// Made by Fatin Hoque
+
 `ifndef CLOCK
 `define CLOCK
-
 `timescale 1ns/100ps
 
-module clock
-    #(parameter ticks = 10)(
-    //
-    // ---------------- PORT DEFINITIONS ----------------
-    //
-    input ENABLE,
-    output reg CLOCK
-);
-    //
-    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
-    //
+module clock #(parameter ticks = 10)(
+    input  ENABLE,
+    output reg CLOCK);
+
     reg start_clock;
-    real clock_on = ticks/2; // duty cycle = 50%
+    real clock_on  = ticks/2;
     real clock_off = ticks/2;
 
-    // initialize variables
     initial begin
-      CLOCK <= 0;
-      start_clock <= 0;
+        CLOCK       = 0;
+        start_clock = 0;
     end
 
     always begin
         #(ticks/2);
-        if (ENABLE)
-            CLOCK = ~CLOCK;
-        else
-            CLOCK = 0;
+        if (!ENABLE) CLOCK = 0;
+        else         CLOCK = ~CLOCK;
     end
-endmodule
 
-`endif // CLOCK
+endmodule
+`endif

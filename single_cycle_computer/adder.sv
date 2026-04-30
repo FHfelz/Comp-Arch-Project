@@ -1,32 +1,21 @@
-//////////////////////////////////////////////////////////////////////////////////
-// The Cooper Union
-// ECE 251 Spring 2023
-// Engineer: Prof Rob Marano
-// 
-//     Create Date: 2023-02-07
-//     Module Name: adder
-//     Description: simple behavorial adder
-//
-// Revision: 1.0
-//
-//////////////////////////////////////////////////////////////////////////////////
-`ifndef ADDER
+
+// Engineer: Fatin Hoque
+
 `define ADDER
 
 `timescale 1ns/100ps
 
 module adder
-    #(parameter n = 32)(
-    //
-    // ---------------- PORT DEFINITIONS ----------------
-    //
-    input  logic [(n-1):0] A, B,
-    output logic [(n-1):0] Y
+#(parameter n = 32)
+(
+    input  logic [n-1:0] A,
+    input  logic [n-1:0] B,
+    output logic [n-1:0] Y
 );
-    //
-    // ---------------- MODULE DESIGN IMPLEMENTATION ----------------
-    //
+
+    // simple combinational addition
     assign Y = A + B;
+
 endmodule
 
-`endif // ADDER
+`endif
