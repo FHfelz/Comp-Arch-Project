@@ -46,10 +46,14 @@ Final part, writes result back to Register File
 2. RegWrite: Control Unit enables signal to ensure result is saved in correct register.
 
 # How to Demo code:
-//Step 2:
+//Step 1:
+
 iverilog -g2012 -o sim tb_computer.sv ../computer/computer.sv ../datapath/datapath.sv ../cpu/cpu.sv ../controller/controller.sv ../imem/imem.sv ../dmem/dmem.sv ../adder/adder.sv ../alu/alu.sv ../regfile/regfile.sv ../dff/dff.sv ../sl2/sl2.sv ../mux2/mux2.sv ../signext/signext.sv
+
 //Step 2:
+
 vvp sim
 
 //Step 3 (NEEDED for viewing RIJ Graphs:
+
 gtkwave waves.vcd
