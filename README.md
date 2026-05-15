@@ -57,6 +57,6 @@ iverilog -g2012 -o sim tb_computer.sv ../computer/computer.sv ../datapath/datapa
 
 vvp sim
 
-//Step 3 (NEEDED for viewing RIJ Graphs:
+//Step 3 (NEEDED for viewing RIJ Graphs):
 
 gtkwave waves.vcd
