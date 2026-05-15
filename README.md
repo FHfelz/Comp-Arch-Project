@@ -2,7 +2,7 @@
 # BY Fatin Hoque, Ishmam Raiyan
 
 ## Description
-The Computer Architecture projects applies a 32 bit single-cycle CPU using SystemVerilog. The design is based on the ISA strucure and uses it to suports R, I, J -type instructions. The Verilog based CPU is able to execute aritmetic, control flow, logic, and memory instructions.
+This Computer Architecture project applies a 32-bit single-cycle CPU using SystemVerilog. The design is based on the ISA structure and uses it to support R, I, and J-type instructions. The Verilog-based CPU can execute arithmetic, control flow, logic, and memory instructions.
 
 # CPU Design and Documentation
 
@@ -12,38 +12,41 @@ The Computer Architecture projects applies a 32 bit single-cycle CPU using Syste
 ## Overall Design Explanation
 
 ### 1. Instruction Fetch
-Retrieves instruction from memory and prepares address for the next instruction.
-1. Program Counter: Holds current instruction's memory adress.
-2. Instruction Memory: Recieves PC adress/ outputs 32-bit instruction.
-3. Program Counter
-   -  Add unit increments PC (+4) to point to next sequential instruction.
-   -  SHIFT Left 2 calculates branch offset.
-   -  MUX selects between sequential adress (PC + 4) and branch target adress based on PCSRC signal.
+Instructions are received from the memory, and the addresses are prepared for the next instruction.
+1. The Program Counter contains the memory address of the current instruction.
+2. The Instruction Memory receives the PC address and outputs a 32-bit instruction.
+3. PC Update Logic
+   -  Add unit increments PC (+4) to point to the next sequential instruction.
+   -  SHIFT Left 2 calculates the branch offset.
+   -  MUX selects between the sequential address (PC + 4) and the branch target address based on the PCSRC signal.
 
 ### 2. Instruction Decode / Register read
-Processor splits the 32 bit instruction to specific fields to control hardware.
-1. Control unit: Takes opcode (Instruction [31-26]) and generates all relevant control signals: ALUOp, Branch, MemRead, MemtoReg, MemWrite, RegDst, and RegWrite.
+The processor splits the 32-bit instruction into specific fields for controlling hardware.
+1. The Control unit takes the opcode (Instruction [31-26]) and generates all relevant control signals: ALUOp, Branch, MemRead, MemtoReg, MemWrite, RegDst, and RegWrite.
 2. Register files:
    - Uses bits  [25-21] and [20-16] for selecting source registers.
-   - Outputs 2 pieces of data (Read Data 1/2).
-3. Sign Extend: Converts 16-bit immediate value (Instruction [15-0]) to 32-bit value in order for it to be processed by ALU.
+   - Outputs 2 different pieces of data (Read Datas 1 and 2).
+3. The Sign Extend converts a 16-bit immediate value (Instruction [15-0]) to a 32-bit value for the ALU to process it.
 
 ### 3. Execute
-Where actual arithmetic or logic opperations happen.
-1. AL MUX: multiplexer decides whether ALu's second opperand come from register file (R-type instructions. Ex. add) or Sign Extended immediate values. (I-type instructions. Ex. addi
-2. ALU: PReforms opperations dictated by ALU Control unit
-3. ALU Result: Output can be used as a calculated value or as a memory adress for next stage.
-4. Zera Flag: ALU outputs  "Zero" signa, which is used for conjuction with Branch control signal to determine if conditional branch (Ex. beq) should be taken.
+Where actual arithmetic or logical operations happen.
+1. AL MUX: multiplexer decides whether ALu's second operand comes from the register file (R-type instructions, e.g., add) or Sign-Extended immediate values. (I-type instructions, e.g., addi)
+2. ALU: Performs operations dictated by the ALU Control unit
+3. ALU Result: Output can be used as a calculated value or as a memory address for the next stage.
+4. Zero Flag: ALU outputs  "Zero" signal, which is used in conjunction with the Branch control signal to determine if a conditional branch (e.g., beq) should be taken.
 
 ### 4. Memory Acess
 Only active for instructions that interact with data memory (Load/ Store).
 1. Data Memory: Uses ALU Result as Address.
-2. Read/Write: Controlled by MemRead and MemWrite signals. If Load instruction -> data is read for memory, if store instruction -> data from Register File is written to memory.
+2. Read/Write: Controlled by MemRead and MemWrite signals. If a load instruction occurs, data is read from the memory. If a store instruction occurs, data from the Register File is written to memory.
 
 ### 5. Write Back
-Final part, writes result back to Register File
-1. MemtoReg MUX: Multiplexer selects wheter data written to destintion register comes from ALU Results (arithmetic Operations or Data Memory (load opperations).
-2. RegWrite: Control Unit enables signal to ensure result is saved in correct register.
+Final part, writes the result back to the Register File
+1. MemtoReg MUX: Multiplexer selects whether data written to the destination register comes from ALU Results (arithmetic Operations or Data Memory (load operations)).
+2. RegWrite: Control Unit enables a signal to ensure the result is saved in the correct register.
+
+## Test Benches
+There are test benches for every program used to make the CPU, including the adder.sv, alu.sv, aludec.sv, cluck.sv, computer.sv, controller.sv, cpu.sv, datapath.sv, dff.sv, dmem.sv, imem.sv, maindec.sv, mux2.sv, regfile.sv signext.sv, and the sl2.sv. These testbenches are all written in Verilog and used to verify that each program for the different parts of the CPU works.
 
 # How to Demo code:
 //Step 1:
