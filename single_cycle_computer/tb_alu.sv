@@ -1,8 +1,10 @@
 //FH
+`include "../alu/alu.sv"
+
 `ifndef TB_ALU
 `define TB_ALU
 `timescale 1ns/100ps
-`include "alu.sv"
+
 
 module tb_alu;
     parameter n = 32;
