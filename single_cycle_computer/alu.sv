@@ -1,7 +1,6 @@
-
 // Engineer: Fatin Hoque 
-
-`define ALU
+`ifndef ALU_SV
+`define ALU_SV
 
 `timescale 1ns/100ps
 
@@ -9,7 +8,7 @@ module alu
 #(parameter n = 32)
 (
     input  logic               clk,
-    input  logic [n-1:0]        a, b,
+    input  logic [n-1:0]       a, b,
     input  logic [3:0]         alucontrol,
     output logic [n-1:0]       result,
     output logic               zero
@@ -26,14 +25,14 @@ module alu
     // Combinatorics
     // ------------------------------------------------------------
     assign condinvb = alucontrol[2] ? ~b : b;
-    assign sumSlt    = a + condinvb + alucontrol[2];
+    assign sumSlt   = a + condinvb + alucontrol[2];
     assign zero      = (result == {n{1'b0}});
 
     // ------------------------------------------------------------
     // Multiplication/Division storage (Hi/Lo register)
     // ------------------------------------------------------------
     initial begin
-        HiLo = {2*n{1'b0}};
+        HiLo = {(2*n){1'b0}};
     end
 
     // ------------------------------------------------------------
@@ -41,7 +40,6 @@ module alu
     // ------------------------------------------------------------
     always @(*) begin
         case (alucontrol)
-
             4'b0000: result = a & b;                 // AND
             4'b0001: result = a | b;                 // OR
             4'b0010: result = a + b;                 // ADD
@@ -51,8 +49,8 @@ module alu
             4'b0110: result = sumSlt;                // SUB
 
             4'b0111: begin                           // SLT
-                if (a[31] != b[31]) begin
-                    result = (a[31] < b[31]) ? 1 : 0;
+                if (a[n-1] != b[n-1]) begin
+                    result = (a[n-1] > b[n-1]) ? 1 : 0; // Signed SLT logic
                 end else begin
                     result = (a < b) ? 1 : 0;
                 end
@@ -67,20 +65,18 @@ module alu
     // ------------------------------------------------------------
     always @(negedge clk) begin
         case (alucontrol)
-
             4'b1000: begin
-                HiLo = a * b;
+                HiLo <= a * b;
             end
-
             4'b1001: begin
-                HiLo[n-1:0]     = a / b;
-                HiLo[2*n-1:n]   = a % b;
+                if (b != 0) begin
+                    HiLo[n-1:0]     <= a / b;
+                    HiLo[2*n-1:n]   <= a % b;
+                end
             end
-
             default: begin
-                HiLo = HiLo;
+                HiLo <= HiLo;
             end
-
         endcase
     end
 
