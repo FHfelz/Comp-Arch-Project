@@ -1,9 +1,11 @@
 
 // FH
+`include "../adder/adder.sv"
+
 `ifndef TB_ADDER
 `define TB_ADDER
 `timescale 1ns/100ps
-`include "adder.sv"
+
 
 module tb_adder;
     parameter n = 32;
