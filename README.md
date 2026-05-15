@@ -48,6 +48,14 @@ Final part, writes the result back to the Register File
 ## Test Benches
 There are test benches for every program used to make the CPU, including the adder.sv, alu.sv, aludec.sv, cluck.sv, computer.sv, controller.sv, cpu.sv, datapath.sv, dff.sv, dmem.sv, imem.sv, maindec.sv, mux2.sv, regfile.sv signext.sv, and the sl2.sv. These testbenches are all written in Verilog and used to verify that each program for the different parts of the CPU works.
 
+## Issues With the RIJ timing waves:
+I was able to fix the code and make the computer work after debugging; however, the waves do not work for some parts and generate wrong values and errors for some parts as the values generate errors (red color).  
+
+<img width="1919" height="1129" alt="Screenshot 2026-05-15 115311" src="https://github.com/user-attachments/assets/3fce0dc0-7dd7-4af9-a8b9-710032b07d8a" />
+
+## Link to video Demo:
+[Ishmam Raiyan and Fatin Hoque's Video Demo of The Final Project](https://www.veed.io/view/03fb7193-7c7a-4fb1-9685-9ed815b7c63b?source=editor&panel=share)
+
 # How to Demo code:
 //Step 1:
 
