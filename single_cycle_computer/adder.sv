@@ -1,6 +1,7 @@
-
 // Engineer: Fatin Hoque
+//Editor: Ishmam Raiyan
 
+`ifndef ADDER
 `define ADDER
 
 `timescale 1ns/100ps
